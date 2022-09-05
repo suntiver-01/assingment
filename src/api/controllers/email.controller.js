@@ -10,30 +10,34 @@ const methods = {
         const { error } = validateEmail(req.body);      
         if (error) return res.error({message:error.details[0].message,statusCode:400})
 
-        try {
-            sendMail({
-                to:req.body.receiver,
-                from: "shanjairajdev@gmail.com",
-                subject:req.body.subject,
-                html:Template(req.body.message)
-            })
-
+      
+        sendMail({
+            to:req.body.receiver,
+            from: "arthit.chueahom@gmail.com",
+            subject:req.body.subject,
+            html:Template(req.body.message)
+        }).then(()=>{
             const respone = {
                 to: req.body.receiver,
-                from: "shanjairajdev@gmail.com",
+                from: "arthit.chueahom@gmail.com",
                 subject:req.body.subject,
                 message:req.body.message,
                 status:"Send email success"
             };
-
-            return res.success({data:respone})
             
-        } catch (error) {
+            return res.success({data:respone})
+
+        }).catch(()=>{
 
             return  res.error({message:"Error send Email!",statusCode:400})
-            
-        }
+        })
 
+         
+         
+
+          
+            
+       
       
     },
 
